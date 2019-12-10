@@ -1,3 +1,7 @@
+# About
+
+A fullstack e-commerce web app developed using React framework.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
