@@ -62,47 +62,42 @@ class SignUp extends React.Component{
         <span>Sign up with email and password</span>
         <form className="sign-up-form" onSubmit={this.handleSubmit}>
           <FormInput
-            type="text"
-            name="displayName"
-            value={email}
-            onChange={this.handleChange}
-            label="Display Name"
-            required
-          >
-          </FormInput>
-          <FormInput
-            type="email"
-            name="email"
+            type='text'
+            name='displayName'
             value={displayName}
             onChange={this.handleChange}
-            label="Email"
+            label='Display Name'
             required
-          >
-          </FormInput>
+          />
           <FormInput
-            type="password"
-            name="password"
+            type='email'
+            name='email'
+            value={email}
+            onChange={this.handleChange}
+            label='Email'
+            required
+          />
+          <FormInput
+            type='password'
+            name='password'
             value={password}
             onChange={this.handleChange}
-            label="Password"
+            label='Password'
             required
-          >
-          </FormInput>
+          />
           <FormInput
-            type="password"
-            name="confirmpassword"
+            type='password'
+            name='confirmPassword'
             value={confirmPassword}
             onChange={this.handleChange}
-            label="Comfirm Password"
+            label='Confirm Password'
             required
-          >
-          </FormInput>
+          />
           <CustomButton type="submit" >SIGN UP</CustomButton>
         </form>
       </div>
-    )
+    );
   }
-
 }
 
 export default SignUp;
