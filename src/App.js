@@ -22,9 +22,24 @@ class App extends React.Component {
   // unmounts in order to prevent memory leaks
   unsubscribeFromAuth = null;
 
+  // Store user data in App
   componentDidMount() {
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async user => {
-      createUserProfileDocument(user);
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+      if (userAuth){
+        const userRef = await createUserProfileDocument(userAuth);
+
+        userRef.onSnapshot(snapshot => {
+          this.setState({
+            currentUser: {
+              id: snapshot.id,
+              ...snapshot.data()
+            }
+          });
+        });
+      }
+      else{
+        this.setState({currentUser: userAuth});
+      }
     });
   }
 
