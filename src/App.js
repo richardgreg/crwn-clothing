@@ -22,8 +22,9 @@ class App extends React.Component {
   // unmounts in order to prevent memory leaks
   unsubscribeFromAuth = null;
 
-  // Store user data in App
+  // Store user data/state in App
   componentDidMount() {
+    // Listen to authentication state changes
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
       if (userAuth){
         const userRef = await createUserProfileDocument(userAuth);
@@ -53,7 +54,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Header currentUser={this.state.currentUser} />
+        <Header/>
         <Switch>
           <Route exact path="/" component={HomePage}></Route>
           <Route path="/shop" component={ShopPage}></Route>
