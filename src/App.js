@@ -1,6 +1,7 @@
 import React from "react";
 import {Switch, Route, Redirect} from "react-router-dom";
 import {connect} from "react-redux";
+import { createStructuredSelector } from "reselect";
 
 import "./App.css";
 
@@ -10,6 +11,7 @@ import Header from "./components/header/header";
 import SignInAndSignUpPage from "./pages/sign-in-and-sign-up/sign-in-and-sign-up.jsx";
 import { auth, createUserProfileDocument} from "./firebase/firebase.utils";
 import {setCurrentUser} from "./redux/user/user.action";
+import {selectCurrentUser} from "./redux/user/user.selector";
 
 
 class App extends React.Component {
@@ -61,8 +63,8 @@ class App extends React.Component {
 }
 
 // Get user state for redirect
-const mapStateToProps = ({user}) => ({
-  currentUser: user.currentUser
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser
 });
 
 // Dispatch passes whatever object it gets to every
