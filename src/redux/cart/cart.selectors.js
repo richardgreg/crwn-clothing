@@ -2,16 +2,19 @@ import {createSelector} from "reselect";
 
 const selectCart = state => state.cart;
 
+// input selector: one layer deep
 export const selectCartItems = createSelector(
   [selectCart],
   cart => cart.cartItems
 );
 
+// input selector: One layer deep
 export const selectCartHidden = createSelector(
   [selectCart],
   cart => cart.hidden
-)
+);
 
+// selector accumulating cart items
 export const selectCartItemsCount = createSelector(
   [selectCartItems],
   cartItems =>
@@ -22,6 +25,7 @@ export const selectCartItemsCount = createSelector(
     )
 );
 
+// selector for calculating tota; cart items
 export const selectCartTotal = createSelector(
   [selectCartItems],
   cartItems =>
