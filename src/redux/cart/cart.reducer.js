@@ -10,6 +10,7 @@ const cartReducer = (state = INITIAL_STATE, action) => {
   switch (action.type){
     case CartActionTypes.TOGGLE_CART_HIDDEN:
       return{
+        // New object that returns everything in state
         ...state,
         hidden: !state.hidden
       };
@@ -18,6 +19,15 @@ const cartReducer = (state = INITIAL_STATE, action) => {
         ...state,
         cartItems: addItemToCart(state.cartItems, action.payload)
       };
+    case CartActionTypes.CLEAR_ITEM_FROM_CART:
+      return{
+        ...state,
+        // Update reducer so reducer removes appropriate item from array
+        // filter returns anything that matches the fxn i.e anything that does
+        // not match the payload
+        cartItems: state.cartItems.filter(
+          cartItem => cartItem.id !== action.payload.id)
+      }
     default:
       return state;
   }
