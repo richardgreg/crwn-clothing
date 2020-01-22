@@ -19,3 +19,24 @@ export const addItemToCart = (cartItems, cartItemToAdd) => {
   // Subsequent cart items can reference the quant
   return [...cartItems, {...cartItemToAdd, quantity: 1}];
 }
+
+export const removeItemFromCart = (cartItems, cartItemToRemove) => {
+  // Check for existing cart item using find() which returns one item
+  const existingCartItem = cartItems.find(
+    cartItem => cartItem.id === cartItemToRemove.id
+  );
+
+  // For single quantities: filter == delete item
+  if (existingCartItem.quantity === 1){
+    return cartItems.filter(cartItem => cartItem.id !== cartItemToRemove.id);
+  }
+
+  return cartItems.map(
+    cartItem =>
+    // if they match, return a new object (...cartItem)
+    // and decrease the quantity
+    cartItem.id === cartItemToRemove.id ?
+    {...cartItem, quantity: cartItem.quantity - 1}
+    : cartItem
+  );
+};
