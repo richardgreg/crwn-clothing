@@ -6,6 +6,10 @@ import rootReducer from "./root-reducer";
 
 const middlewares = [logger];
 
+if (process.env.NODE_ENV === "development") {
+  middlewares.push(logger);
+}
+
 // Export for Redux persist: Lesson 126
 // Technically, the exports on the const are not needed
 export const store = createStore(rootReducer, applyMiddleware(...middlewares))
