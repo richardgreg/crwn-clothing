@@ -41,6 +41,24 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   return userRef;
 }
 
+// Lesson 159
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+  // Create collection using the collection key
+  const collectionRef = firestore.collection(collectionKey);
+
+  const batch = firestore.batch();
+  // loop through the array and batch the calls together
+  objectsToAdd.forEach(obj => {
+    // get document at an empty string i.e. give me a new object in this collection
+    // and randomly generate an id
+    const newDocRef = collectionRef.doc();
+    batch.set(newDocRef, obj);
+  });
+
+  // fire off batch call using commit
+  return await batch.commit();
+};
+
 // Firebase configuration
 firebase.initializeApp(config);
 

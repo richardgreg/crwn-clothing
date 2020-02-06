@@ -11,10 +11,10 @@ import Header from "./components/header/header";
 import SignInAndSignUpPage from "./pages/sign-in-and-sign-up/sign-in-and-sign-up.jsx";
 import CheckoutPage from "./pages/checkout/checkout.jsx";
 
-import { auth, createUserProfileDocument} from "./firebase/firebase.utils";
+import { auth, createUserProfileDocument,}
+from "./firebase/firebase.utils";
 import {setCurrentUser} from "./redux/user/user.action";
 import {selectCurrentUser} from "./redux/user/user.selector";
-
 
 class App extends React.Component {
   // Close subcription when auth.onAuthStateChanged
@@ -39,6 +39,8 @@ class App extends React.Component {
       }
       setCurrentUser(userAuth);
       //console.log(userAuth);
+      // Instead of passing the full array (collectionsArray), pass in a new
+      // array where you get the title and object
     });
   }
 
