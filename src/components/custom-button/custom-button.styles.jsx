@@ -34,7 +34,7 @@ const googleSignInStyles = css`
   }
 `;
 
-// for attributing the right style to right button
+// for attributing the right style to the right button
 const getButtonStyles = props => {
   if (props.isGoogleSignIn) {
     return googleSignInStyles;

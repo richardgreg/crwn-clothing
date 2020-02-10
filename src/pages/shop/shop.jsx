@@ -11,9 +11,20 @@ import { firestore, convertCollectionsSnapshotToMap} from "../../firebase/fireba
 
 import {UpdateCollections} from "../../redux/shop/shop.action";
 
+import WithSpinner from "../../components/with-spinner/with-spinner.component";
+
+const CollectionsOverviewWithSpinner = WithSpinner(CollectionsOverview);
+const CollectionPageWithSpinner = WithSpinner(CollectionPage);
+
  // Shop page is nested in a route. Shop page automatically
  // passes location, history and match as props. Destr. match.
 class ShopPage extends React.Component {
+  // React knows that if you write a state property declaration in your component
+  // it will under the hood invoke super() so we can leverage the state value
+  state = {
+    loading: true
+  };
+
   unsubscribeFromSnapshot = null;
 
   componentDidMount() {
@@ -26,15 +37,23 @@ class ShopPage extends React.Component {
     collectionRef.onSnapshot(async snapshot => {
       const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
       updateCollections(collectionsMap);
+      this.setState({loading: false});
     });
   }
 
   render(){
     const {match} = this.props;
+    const {loading} = this.state;
     return(
+      // render is a method that takes a fxn where the params in the fxn are
+      // simply the params that the component will recieve which are the match,
+      // location and history props that route passes into the components which 
+      // gives collection page access to match that we use in selector
       <div className='shop-page'>
-        <Route exact path={`${match.path}`} component={CollectionsOverview} />
-        <Route path={`${match.path}/:collectionId`} component={CollectionPage} />
+        <Route exact path={`${match.path}`} render={(props) => 
+          <CollectionsOverviewWithSpinner isLoading={loading} {...props}/>} />
+        <Route path={`${match.path}/:collectionId`} render={(props) => 
+          <CollectionPageWithSpinner isLoading={loading} {...props} />} />
       </div>
     );
   }
