@@ -29,3 +29,10 @@ export const selectIsCollectionFetching = createSelector(
   [selectShop],
   shop => shop.isFetching
 );
+
+// Check if collections is loaded in order to display on collections page
+// and return a bool lesson 172
+export const selectIsCollectionLoading = createSelector(
+  [selectShop],
+  shop => !!shop.collections
+);
