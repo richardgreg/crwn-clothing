@@ -1,4 +1,4 @@
-import {takeEvery, call, put} from "redux-saga/effects";
+import {takeLatest, call, put} from "redux-saga/effects";
 
 import {
   firestore, convertCollectionsSnapshotToMap
@@ -26,7 +26,7 @@ export function* fetchCollectionsAsync() {
     yield put(fetchCollectionsFailure(error))
   }
   
-
+  // REDUX THUNK!!!
   // Send us a snapshot Whenever the collectionRef updates or runs for the
   // first time
   // collectionRef
@@ -39,7 +39,7 @@ export function* fetchCollectionsAsync() {
 
 // Pause when a specific action type that we want comes in
 export function* fetchCollectionsStart() {
-  yield takeEvery(
+  yield takeLatest(
     ShopActionTypes.FETCH_COLLECTIONS_START,
     fetchCollectionsAsync
   );
