@@ -26,22 +26,22 @@ class App extends React.Component {
     const {setCurrentUser} = this.props;
 
     // Listen to authentication state changes
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-      if (userAuth){
-        const userRef = await createUserProfileDocument(userAuth);
+    // this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
+    //   if (userAuth){
+    //     const userRef = await createUserProfileDocument(userAuth);
 
-        userRef.onSnapshot(snapshot => {
-          setCurrentUser({
-            id: snapshot.id,
-            ...snapshot.data()
-          });
-        });
-      }
-      setCurrentUser(userAuth);
+    //     userRef.onSnapshot(snapshot => {
+    //       setCurrentUser({
+    //         id: snapshot.id,
+    //         ...snapshot.data()
+    //       });
+    //     });
+    //   }
+    //   setCurrentUser(userAuth);
       //console.log(userAuth);
       // Instead of passing the full array (collectionsArray), pass in a new
       // array where you get the title and object
-    });
+    // });
   }
 
   // Firebase: Unsubscribe from auth sevice when components
