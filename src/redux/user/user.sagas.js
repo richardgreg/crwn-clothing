@@ -8,7 +8,10 @@ import {
 } from "./user.action";
 
 import {
-  auth, googleProvider, createUserProfileDocument
+  auth,
+  googleProvider,
+  createUserProfileDocument,
+  getCurrentUser
 } from "../../firebase/firebase.utils";
 
 export function* getSnapshotFromUserAuth(userAuth) {
@@ -17,7 +20,8 @@ export function* getSnapshotFromUserAuth(userAuth) {
     // get the snapshot
     const userSnapshot = yield userRef.get();
     // Pass the data and trigger success
-    // put() puts stuff back into our regular redux flow
+    // put() puts stuff back into our regular redux flow. It's the sagas way of
+    // dispatching collections.
     yield put(signInSuccess({ id: userSnapshot.id, ...userSnapshot.data() }));
   } catch (error) {
     yield put(signInFailure(error));
@@ -29,7 +33,7 @@ export function* signInWithGoogle() {
     // load user in
     const {user} = yield auth.signInWithPopup(googleProvider);
     yield getSnapshotFromUserAuth(user);
-  }catch (error) {
+  } catch (error) {
     yield put(signInFailure(error));
     }
 };
@@ -37,7 +41,18 @@ export function* signInWithGoogle() {
 export function* signInWithEmail({payload: {email, password}}) {
   try {
     const { user } = yield auth.signInWithEmailAndPassword(email, password);
-    yield getSnapshotFromUserAuth(user)
+    yield getSnapshotFromUserAuth(user);
+  } catch (error) {
+    yield put(signInFailure(error));
+  }
+};
+
+export function* isUserAuthenticated() {
+  try {
+    // get user auth when this method is called
+    const userAuth = yield getCurrentUser();
+    if (!userAuth) return;
+    yield getSnapshotFromUserAuth(userAuth);
   } catch (error) {
     yield put(signInFailure(error));
   }
@@ -53,6 +68,14 @@ export function* onEmailSignInStart() {
   yield takeLatest(UserActionTypes.EMAIL_SIGN_IN_START, signInWithEmail);
 };
 
+export function* onCheckUserSession() {
+  yield takeLatest(UserActionTypes.CHECK_USER_SESSION, isUserAuthenticated);
+}
+
 export function* userSagas() {
-  yield all([call(onGoogleSignInStart), call(onEmailSignInStart)]);
+  yield all([
+    call(onGoogleSignInStart),
+    call(onEmailSignInStart),
+    call(onCheckUserSession)
+  ]);
 };

@@ -12,6 +12,7 @@ import SignInAndSignUpPage from "./pages/sign-in-and-sign-up/sign-in-and-sign-up
 import CheckoutPage from "./pages/checkout/checkout.jsx";
 
 import {selectCurrentUser} from "./redux/user/user.selector";
+import {CheckUserSession} from "./redux/user/user.action";
 
 class App extends React.Component {
   // Close subcription when auth.onAuthStateChanged
@@ -20,24 +21,8 @@ class App extends React.Component {
 
   // Store user data/state in App
   componentDidMount() {
-
-    // Listen to authentication state changes
-    // this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
-    //   if (userAuth){
-    //     const userRef = await createUserProfileDocument(userAuth);
-
-    //     userRef.onSnapshot(snapshot => {
-    //       setCurrentUser({
-    //         id: snapshot.id,
-    //         ...snapshot.data()
-    //       });
-    //     });
-    //   }
-    //   setCurrentUser(userAuth);
-      //console.log(userAuth);
-      // Instead of passing the full array (collectionsArray), pass in a new
-      // array where you get the title and object
-    // });
+    const {checkUserSession} = this.props;
+    checkUserSession()
   }
 
   // Firebase: Unsubscribe from auth sevice when components
@@ -70,5 +55,8 @@ const mapStateToProps = createStructuredSelector({
 
 // Dispatch passes whatever object it gets to every
 // reducer
+const mapDispatchToProps = dispatch => ({
+  checkUserSession: () => dispatch(CheckUserSession())
+});
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

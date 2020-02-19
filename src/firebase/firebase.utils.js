@@ -77,7 +77,18 @@ export const convertCollectionsSnapshotToMap = (collections) => {
     accumulator[collection.title.toLowerCase()] = collection;
     return accumulator;
   }, {});
-}
+};
+
+// Lecture 187: Recreating Persistence
+export const getCurrentUser = () => {
+  // return promise oriented result that sagas can yield for
+  return new Promise((resolve, reject) => {
+    const unsubscribe = auth.onAuthStateChanged(userAuth => {
+      unsubscribe();
+      resolve(userAuth);
+    }, reject);
+  });
+};
 
 // Firebase configuration
 firebase.initializeApp(config);
