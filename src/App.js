@@ -11,9 +11,6 @@ import Header from "./components/header/header";
 import SignInAndSignUpPage from "./pages/sign-in-and-sign-up/sign-in-and-sign-up.jsx";
 import CheckoutPage from "./pages/checkout/checkout.jsx";
 
-import { auth, createUserProfileDocument,}
-from "./firebase/firebase.utils";
-import {setCurrentUser} from "./redux/user/user.action";
 import {selectCurrentUser} from "./redux/user/user.selector";
 
 class App extends React.Component {
@@ -23,7 +20,6 @@ class App extends React.Component {
 
   // Store user data/state in App
   componentDidMount() {
-    const {setCurrentUser} = this.props;
 
     // Listen to authentication state changes
     // this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
@@ -74,8 +70,5 @@ const mapStateToProps = createStructuredSelector({
 
 // Dispatch passes whatever object it gets to every
 // reducer
-const mapDispatchToProps = dispatch => ({
-  setCurrentUser: user => dispatch(setCurrentUser(user))
-});
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps)(App);
