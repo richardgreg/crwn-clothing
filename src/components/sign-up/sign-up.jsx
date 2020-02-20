@@ -16,8 +16,8 @@ class SignUp extends React.Component{
       email: "",
       password: "",
       confirmPassword: ""
-    }
-  }
+    };
+  };
 
   // For handling new user datails submission
   handleSubmit = async event => {
@@ -27,7 +27,7 @@ class SignUp extends React.Component{
     if(password !== confirmPassword) {
       alert("password do not match");
       return;
-    }
+    };
 
     try {
       const {user} = await auth.createUserWithEmailAndPassword(email, password);
@@ -44,8 +44,8 @@ class SignUp extends React.Component{
 
     } catch (error) {
       console.error(error);
-    }
-  }
+    };
+  };
 
   handleChange = event => {
     const { name, value } = event.target;
@@ -97,7 +97,7 @@ class SignUp extends React.Component{
         </form>
       </div>
     );
-  }
-}
+  };
+};
 
 export default SignUp;
