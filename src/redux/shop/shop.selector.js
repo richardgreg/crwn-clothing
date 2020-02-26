@@ -32,7 +32,7 @@ export const selectIsCollectionFetching = createSelector(
 
 // Check if collections is loaded in order to display on collections page
 // and return a bool lesson 172
-export const selectIsCollectionLoaded = createSelector(
+export const selectIsCollectionsLoaded = createSelector(
   [selectShop],
   shop => !!shop.collections
 );
