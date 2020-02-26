@@ -9,11 +9,6 @@ export const GlobalStyle = createGlobalStyle`
       padding: 10px;
     }
   }
-  @media screen and (max-width: 420px) {
-    .djJJRx{
-      padding: 0;
-    }
-  }
     
   a{ 
     text-decoration: none;
